@@ -1,0 +1,12 @@
+//#region AppWrite
+const BACKEND_URL = "https://api.koios.live";
+const BACKEND_PROJECT_ID = "koios";
+const BACKEND_API_KEY =
+  "610b6c259d2e73e5cf534a3e8e9635c48bb9ee257302e40679acbaef604acdcf7730df98323e61f8330c81528ba05027efb15b8848083134014c3d8d912cc6f7932e145b3d7f02eb2f7734d7b70eee1c5e558da39377b6e940be2b5b11c854ee78ee786d7c2c580a8727cde76c3c839f3cd69dadf19b39fff68859a905d75e70";
+//#endregion
+
+module.exports = {
+    BACKEND_URL,
+    BACKEND_PROJECT_ID,
+    BACKEND_API_KEY
+}
