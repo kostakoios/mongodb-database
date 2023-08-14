@@ -11,7 +11,7 @@ const { sdk, database, DATABASE_NAME } = require("./db/appwrite");
 // const main = async () => {
 //     try {
 //         //Connect to the database of mongodb 
-//        await mongoose.connect("mongodb+srv://kostat:sQnwAtorUcaVqB1t@cluster0.tfmelcn.mongodb.net/documents");
+      //  await mongoose.connect("mongodb+srv://kostat:sQnwAtorUcaVqB1t@cluster0.tfmelcn.mongodb.net/documents");
        
 //        //Get documents from the Appwrite 
 //        await database.listDocuments("default",DATABASE_NAME.API_KEYS,[sdk.Query.limit(100)]).then(async (db) => {
@@ -51,7 +51,7 @@ const { sdk, database, DATABASE_NAME } = require("./db/appwrite");
 //                     // console.log(err));     
 //                 }
 //             }   
-//         }).catch(err => console.error(err));
+        // }).catch(err => console.error(err));
 
     
 //     } catch (err) {
@@ -64,10 +64,12 @@ const { sdk, database, DATABASE_NAME } = require("./db/appwrite");
 
 const insertData = async () => {
     //Connect to the database of mongodb 
-    await mongoose.connect("mongodb+srv://kostat:sQnwAtorUcaVqB1t@cluster0.tfmelcn.mongodb.net/documents");
+    await mongoose.connect('mongodb+srv://kostat:DwWXNG96Ipcsg4aC@cluster0.tfmelcn.mongodb.net/documents')
+    .then(() => console.log('connected')).catch(() => console.log('error'));
     
     const documents = await getAllChannels();
-    
+
+    console.log(documents.length);
     for await (const obj of documents) {
         // const channels = new Channels({
         //     platform: obj.platform,
@@ -80,20 +82,35 @@ const insertData = async () => {
         // await channels.save().then(() => console.log("saved")).catch((err) => 
         // console.log(err)); 
 
-        const alerts = new Alerts({
+        // const alerts = new Alerts({
+        //     stock: obj.stock,
+        //     timestamp: obj.timestamp,
+        //     color: obj.color,
+        //     title: obj.title,
+        //     message: obj.message,
+        //     source: obj.source,
+        //     link: obj.link,
+        //     image: obj.image,
+        //     timeRange: obj.timeRange
+        // });
+        
+        // await alerts.save().then(() => console.log("saved")).catch((err) => 
+        // console.log(err)); 
+
+         const essentials = new Essentials({
             stock: obj.stock,
             timestamp: obj.timestamp,
             color: obj.color,
             title: obj.title,
             message: obj.message,
             source: obj.source,
-            link: obj.link,
+            recomendation: obj.recomendation,
             image: obj.image,
-            timeRange: obj.timeRange
+            body: obj.body
         });
         
-        await alerts.save().then(() => console.log("saved")).catch((err) => 
-        console.log(err)); 
+        await essentials.save().then(() => console.log("saved")).catch((err) => 
+        console.log(err));
     }
 };
 
@@ -127,7 +144,9 @@ const getAllChannels = async () => {
     //In channel version
     // let result = await database.listDocuments("default", DATABASE_NAME.CHANNELS, query);
     //In Alert version
-    let result = await database.listDocuments("default", DATABASE_NAME.ALERTS, query);
+    // let result = await database.listDocuments("default", DATABASE_NAME.ALERTS, query);
+    //In Essentials version
+    let result = await database.listDocuments("default", DATABASE_NAME.ESSENTIALS, query);
 
     return result;
   };
